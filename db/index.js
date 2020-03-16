@@ -17,3 +17,4 @@ connect()
 
 exports.connect = connect
 exports.Threads = require('./schema/Threads')
+exports.Users = require('./schema/Users')
