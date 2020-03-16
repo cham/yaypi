@@ -16,3 +16,4 @@ mongoose.set('useCreateIndex', true)
 connect()
 
 exports.connect = connect
+exports.Threads = require('./schema/Threads')
