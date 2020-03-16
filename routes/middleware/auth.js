@@ -1,3 +1,4 @@
+const authApi = require('../../api/auth')
 const usersApi = require('../../api/users')
 const errorResponse = require('../../controllers/utils/errorResponse')
 
@@ -22,4 +23,20 @@ const login = (req, res, next) => {
     })
 }
 
+const authorizedUser = (req, res, next) => {
+  if (!req.headers.authorization) {
+    return errorResponse.userError({ res, message: 'An Authorization header containing a valid token is required to access this resource', status: 401 })
+  }
+  req.token = req.headers.authorization.replace('Bearer ', '')
+  authApi.verifyToken({ token: req.token })
+    .then((decoded) => {
+      if (!decoded) {
+        return errorResponse.userError({ res, message: 'Invalid token', status: 401 })
+      }
+      req.user = decoded
+      next()
+    })
+}
+
 exports.login = login
+exports.authorizedUser = authorizedUser
