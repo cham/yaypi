@@ -29,12 +29,18 @@ const authorizedUser = (req, res, next) => {
   }
   req.token = req.headers.authorization.replace('Bearer ', '')
   authApi.verifyToken({ token: req.token })
-    .then((decoded) => {
-      if (!decoded) {
+    .then((userData) => {
+      if (!userData) {
         return errorResponse.userError({ res, message: 'Invalid token', status: 401 })
       }
-      req.user = decoded
-      next()
+      usersApi.userBanned(userData)
+        .then((userIsBanned) => {
+          if (userIsBanned) {
+            return errorResponse.userError({ res, message: 'This account has been banned', status: 403 })
+          }
+          req.user = userData
+          next()
+        })
     })
 }
 
