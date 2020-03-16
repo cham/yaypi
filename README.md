@@ -22,9 +22,9 @@ GET /v1/ping
 ```
 Auth
 ```
-POST /v1/auth/login
+POST /v1/auth/login { username, password }
 ```
 Threads
 ```
-GET /v1/threads
+GET /v1/threads { page, pageSize, sortBy, sortDir: ['asc','desc'] }
 ```
