@@ -2,17 +2,10 @@
 
 > API for YayHooray
 
-## Installation
+## Installation & Running
 
-```bash
-./install.sh
-```
-
-## Running the server
-
-```bash
-./run-dev.sh
-```
+1. Have docker installed
+2. `docker-compose up`
 
 ### Routes
 

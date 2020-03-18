@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    stdin_open: true
+    tty: true
+    ports:
+      - 3030:3030
+    volumes:
+      - ./:/opt/api/app:delegated
+    environment:
+      - NODE_ENV=development
+      - WAIT_HOSTS=mongo:27017
+      - YAYHOORAY_API_PORT=3030
+      - YAYHOORAY_MONGODB_URL=mongodb://mongo:27017/yayhooray
+      - YAYHOORAY_JWT_SECRET=dontUseThisSecretInProduction
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:4.2.3
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_DATABASE=yayhoory
+      - MONGO_INITDB_ROOT_USERNAME=yay
+      - MONGO_INITDB_ROOT_PASSWORD=hooray
+    volumes:
+      - ./tmp/mongo:/data/db
+
+networks:
+  default:
