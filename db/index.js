@@ -16,5 +16,6 @@ mongoose.set('useCreateIndex', true)
 connect()
 
 exports.connect = connect
+exports.Comments = require('./schema/Comments')
 exports.Threads = require('./schema/Threads')
 exports.Users = require('./schema/Users')

@@ -1,4 +1,5 @@
 const errorResponse = require('../../controllers/utils/errorResponse')
+const threadsApi = require('../../api/threads')
 
 const ALLOWED_SORT_FIELDS = [
   'created',
@@ -35,4 +36,19 @@ const sort = (req, res, next) => {
   next()
 }
 
+const threadId = (req, res, next) => {
+  if (!req.thread) {
+    req.thread = {}
+  }
+  threadsApi.exists({ _id: req.params.threadId })
+    .then((threadExists) => {
+      if (!threadExists) {
+        return res.status(404).send({ message: 'Thread does not exist' })
+      }
+      req.thread.id = req.params.threadId
+      next()
+    })
+}
+
 exports.sort = sort
+exports.threadId = threadId

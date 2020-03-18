@@ -29,4 +29,10 @@ const get = ({ skip, limit, sortBy, sortDir }) => db.Threads.find(
   }
 )
 
+const getOne = ({ _id }) => db.Threads.findOne({ _id }, THREAD_FIELDS)
+
+const exists = ({ _id }) => getOne({ _id }).then(threadDoc => threadDoc !== null)
+
 exports.get = get
+exports.getOne = getOne
+exports.exists = exists
