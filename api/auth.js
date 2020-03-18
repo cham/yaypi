@@ -16,9 +16,9 @@ const login = ({ username, password }) => db.Users.findOne({ username }, { passw
 const getToken = ({ username }) => db.Users.findOne({ username }, { _id: 1 })
   .then(userDoc => jwt.sign(userDoc.toObject(), JWT_SECRET))
 
-const verifyToken = ({ token }) => new Promise((resolve) => jwt.verify(token, JWT_SECRET, (err, decoded) => {
+const verifyToken = ({ token }) => new Promise((resolve, reject) => jwt.verify(token, JWT_SECRET, (err, decoded) => {
   if (err) {
-    return resolve(null)
+    return reject(err)
   }
   resolve(decoded)
 }))

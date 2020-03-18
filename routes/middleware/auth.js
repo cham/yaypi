@@ -30,9 +30,6 @@ const authorizedUser = (req, res, next) => {
   req.token = req.headers.authorization.replace('Bearer ', '')
   authApi.verifyToken({ token: req.token })
     .then((userData) => {
-      if (!userData) {
-        return errorResponse.userError({ res, message: 'Invalid token', status: 401 })
-      }
       usersApi.userBanned(userData)
         .then((userIsBanned) => {
           if (userIsBanned) {
@@ -41,6 +38,9 @@ const authorizedUser = (req, res, next) => {
           req.user = userData
           next()
         })
+    })
+    .catch(() => {
+      return errorResponse.userError({ res, message: 'Invalid token', status: 401 })
     })
 }
 
