@@ -13,12 +13,6 @@ const THREAD_FIELDS = {
   categories: 1
 }
 
-const threadSorting = ({ sortBy, sortDir }) => {
-  let sort = []
-  sort[sortBy] = sortDir
-  return sort
-}
-
 const get = ({ skip, limit, sortBy, sortDir }) => db.Threads.find(
   {},
   THREAD_FIELDS,
