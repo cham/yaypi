@@ -10,10 +10,7 @@ const login = ({ username, password }) => db.Users.findOne({ username }, { passw
     if (err) {
       return reject(err)
     }
-    if (passwordMatch) {
-      return resolve(true)
-    }
-    return resolve(false)
+    resolve(passwordMatch)
   })))
 
 const getToken = ({ username }) => db.Users.findOne({ username }, { _id: 1 })
