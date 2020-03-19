@@ -1,4 +1,4 @@
-FROM node:13.10
+FROM node:12.16.1
 
 # so we can cleanly wait for other services
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
