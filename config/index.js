@@ -1,7 +1,8 @@
 const config = {
   API_PORT: parseInt(process.env.YAYHOORAY_API_PORT),
   MONGODB_URL: process.env.YAYHOORAY_MONGODB_URL,
-  JWT_SECRET: process.env.YAYHOORAY_JWT_SECRET
+  JWT_SECRET: process.env.YAYHOORAY_JWT_SECRET,
+  DEBUG: process.env.NODE_ENV === 'development',
 }
 
 const get = (str) => {

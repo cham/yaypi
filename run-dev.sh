@@ -1,5 +1,5 @@
 #!/bin/bash
 . ~/.nvm/nvm.sh
-. ./env-dev.sh
+export $(grep -v '^#' .env | xargs)
 nvm use
 node .

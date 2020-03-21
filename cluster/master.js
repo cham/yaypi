@@ -1,4 +1,5 @@
 const cluster = require('cluster')
+const os = require('os')
 const config = require('../config')
 const db = require('../db')
 
@@ -6,7 +7,7 @@ config.check()
 config.log()
 
 db.connect().then(() => {
-  const totalInstances = require('os').cpus().length
+  const totalInstances = config.get('DEBUG') ? 1 : os.cpus().length
   let currentInstances = 0
 
   const increment = () => {
@@ -24,9 +25,11 @@ db.connect().then(() => {
   const handleExit = (worker) => {
     console.error('Worker died. PID: ' + worker.process.pid)
 
-    const newWorker = cluster.fork().once('listening', () => {
-      console.info('Replacement worker spawned. PID: ' + newWorker.process.pid)
-    })
+    if (!config.get('DEBUG')) {
+      const newWorker = cluster.fork().once('listening', () => {
+        console.info('Replacement worker spawned. PID: ' + newWorker.process.pid)
+      })
+    }
   }
 
   cluster.on('exit', handleExit)
