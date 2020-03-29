@@ -13,7 +13,7 @@ const login = ({ username, password }) => db.Users.findOne({ username }, { passw
     resolve(passwordMatch)
   })))
 
-const getToken = ({ username }) => db.Users.findOne({ username }, { _id: 1 })
+const getToken = ({ username }) => db.Users.findOne({ username }, { _id: 1, username: 1 })
   .then(userDoc => jwt.sign(userDoc.toObject(), JWT_SECRET))
 
 const verifyToken = ({ token }) => new Promise((resolve, reject) => jwt.verify(token, JWT_SECRET, (err, decoded) => {
