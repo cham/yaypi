@@ -1,5 +1,8 @@
 const mongoose = require('mongoose')
+const config = require('../../config')
 const Schema = mongoose.Schema
+
+const ALLOWED_CATEGORIES = config.get('ALLOWED_CATEGORIES')
 
 const threadsSchema = new Schema({
   created: {
@@ -36,12 +39,7 @@ const threadsSchema = new Schema({
   },
   categories: {
     type: [String],
-    enum: [
-      'Advice',
-      'Discussions',
-      'Meaningless',
-      'Projects'
-    ],
+    enum: ALLOWED_CATEGORIES,
     required: true
   }
 }, {

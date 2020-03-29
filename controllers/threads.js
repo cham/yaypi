@@ -20,5 +20,10 @@ const getOneWithComments = (req, res) => Promise.all([
   .then(([ thread, comments ]) => res.send(Object.assign({}, thread.toObject(), { comments })))
   .catch(e => errorResponse.systemError({ res, message: e.message }))
 
+const create = (req, res) => threadsApi.create(req.threadPayload)
+  .then(thread => res.status(201).send({ thread }))
+  .catch(e => res.status(500).send({ message: e.message }))
+
 exports.get = get
 exports.getOneWithComments = getOneWithComments
+exports.create = create

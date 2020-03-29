@@ -8,6 +8,20 @@ const COMMENT_FIELDS = {
 	'points': 1,
 }
 
+const clean = obj => Object.keys(obj).reduce((memo, key) => {
+  if (COMMENT_FIELDS.hasOwnProperty(key)) {
+    memo[key] = obj[key]
+  }
+  return memo
+}, {})
+
+const createQuery = ({ threadId, author, content  }) => ({
+  threadid: threadId,
+  postedby: author,
+  created: new Date(),
+  content
+})
+
 const get = ({ skip, limit, threadid }) => db.Comments.find(
   {
     threadid
@@ -20,4 +34,8 @@ const get = ({ skip, limit, threadid }) => db.Comments.find(
   }
 )
 
+const create = ({ threadId, author, content }) => db.Comments.create(createQuery({ threadId, author, content }))
+  .then(doc => clean(doc.toObject()))
+
 exports.get = get
+exports.create = create

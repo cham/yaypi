@@ -8,6 +8,7 @@ const threadsController = require('../controllers/threads')
 
 const router = express.Router()
 
+router.post('/', authMiddleware.authorizedUser, threadsMiddleware.create, threadsController.create)
 router.get('/', authMiddleware.authorizedUser, paginationMiddleware.pagination, threadsMiddleware.sort, threadsController.get)
 router.get('/:threadId', authMiddleware.authorizedUser, paginationMiddleware.pagination, threadsMiddleware.threadId, threadsController.getOneWithComments)
 
