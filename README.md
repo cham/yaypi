@@ -29,10 +29,10 @@ docker-compose up
 To reach a shell inside the container, use
 
 ```bash
-docker-compose run --service-ports --rm api /bin/bash
+npm run docker
 ```
 
-At which point you can `node index.js`.
+At which point you can `npm run watch` or simply `node .`.
 
 
 ### Routes

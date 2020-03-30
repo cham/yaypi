@@ -11,9 +11,7 @@ COPY package*.json ./
 RUN npm install --no-optional && npm cache clean --force
 ENV PATH /opt/api/node_modules/.bin:$PATH
 
-WORKDIR /opt/api/app
-
 COPY . .
 
 EXPOSE 3030
-CMD /wait && supervisor --quiet --watch . --extensions js -- index.js
+CMD /wait && npm run watch
