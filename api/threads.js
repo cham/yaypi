@@ -68,13 +68,16 @@ const create = ({ author, name, content, categories, nsfw, urlname }) => db.Thre
   .then((doc) => {
     return commentsApi.create({ threadId: doc._id, author, content })
       .then((commentDoc) => {
-        return Object.assign(clean(doc.toObject()), { comments: [commentDoc] })
+        return Object.assign(clean(doc.toObject()), { comments: [commentDoc] }, { last_comment_time: commentDoc.created })
       })
       .catch(e => remove(doc).then(() => { throw e }))
   })
+
+const patch = ({ _id, patch }) => db.Threads.updateOne({ _id }, patch)
 
 exports.get = get
 exports.getOne = getOne
 exports.exists = exists
 exports.getThreadUrlname = getThreadUrlname
 exports.create = create
+exports.patch = patch

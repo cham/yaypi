@@ -35,7 +35,15 @@ const get = ({ skip, limit, threadid }) => db.Comments.find(
 )
 
 const create = ({ threadId, author, content }) => db.Comments.create(createQuery({ threadId, author, content }))
-  .then(doc => clean(doc.toObject()))
+  .then((doc) => {
+    const threadPatch = {
+      last_comment_by: author,
+      last_comment_time: doc.created
+    }
+    return db.Threads.updateOne({ _id: threadId }, threadPatch).then(() => {
+      return clean(doc.toObject())
+    })
+  })
 
 exports.get = get
 exports.create = create
