@@ -1,6 +1,7 @@
 const errorResponse = require('../../controllers/utils/errorResponse')
 const threadsApi = require('../../api/threads')
 const config = require('../../config')
+const { isObjectId } = require('./helpers')
 
 const ALLOWED_CATEGORIES = config.get('ALLOWED_CATEGORIES')
 
@@ -42,6 +43,9 @@ const sort = (req, res, next) => {
 const threadId = (req, res, next) => {
   if (!req.thread) {
     req.thread = {}
+  }
+  if (!isObjectId(req.params.threadId)) {
+    return res.status(400).send({ message: 'Thread ID is not valid' })
   }
   threadsApi.exists({ _id: req.params.threadId })
     .then((threadExists) => {

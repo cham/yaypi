@@ -45,5 +45,14 @@ const create = ({ threadId, author, content }) => db.Comments.create(createQuery
     })
   })
 
+const getOne = query => db.Comments.findOne(query, COMMENT_FIELDS)
+
+const exists = ({ _id }) => getOne({ _id }).then(commentsDoc => commentsDoc !== null)
+
+const commentIsInThread = ({ _id, threadId }) => getOne({ _id, threadid: threadId }).then(commentsDoc => commentsDoc !== null)
+
 exports.get = get
 exports.create = create
+exports.getOne = getOne
+exports.exists = exists
+exports.commentIsInThread = commentIsInThread
