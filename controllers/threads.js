@@ -13,6 +13,10 @@ const get = (req, res) => threadsApi.get(payload(req))
   .then(threads => res.send({ threads }))
   .catch(e => errorResponse.systemError({ res, message: e.message }))
 
+const getOne = (req, res) => threadsApi.getOne({ _id: req.thread.id })
+  .then(thread => res.send(thread))
+  .catch(e => errorResponse.systemError({ res, message: e.message }))
+
 const getOneWithComments = (req, res) => Promise.all([
     threadsApi.getOne({ _id: req.thread.id }),
     commentsApi.get(Object.assign({}, payload(req), { threadid: req.thread.id }))
@@ -25,5 +29,6 @@ const create = (req, res) => threadsApi.create(req.threadPayload)
   .catch(e => res.status(500).send({ message: e.message }))
 
 exports.get = get
+exports.getOne = getOne
 exports.getOneWithComments = getOneWithComments
 exports.create = create
