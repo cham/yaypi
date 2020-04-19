@@ -4,7 +4,9 @@
   "description": "API for yayhooray",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docker": "docker-compose run --service-ports --rm api /bin/bash",
+    "watch": "supervisor --quiet --watch . --extensions js -- index.js"
   },
   "repository": {
     "type": "git",

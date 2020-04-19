@@ -12,7 +12,7 @@ If you have your own mongodb service running, and wish to run node directly on y
 ./install.sh
 ```
 
-Set up the node environment and run the server with
+Run the server with
 
 ```bash
 ./run-dev.sh
@@ -20,19 +20,11 @@ Set up the node environment and run the server with
 
 ### Docker
 
-Or use docker to start up a mongodb instance and run the service with supervisor.
+Alternatively, `docker-compose up` provides both a mongo and a node container that uses `supervisor --watch` to run this API server.
 
-```bash
-docker-compose up
-```
+You can also reach a shell inside the node container with `npm run docker`. `./install.sh` and `./run-dev.sh` work from there as well.
 
-To reach a shell inside the container, use
-
-```bash
-docker-compose run --service-ports --rm api /bin/bash
-```
-
-At which point you can `node index.js`.
+Mongo will take a moment to come up on first run.
 
 
 ### Routes
