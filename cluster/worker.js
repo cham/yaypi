@@ -17,6 +17,7 @@ app.use(bodyParser.urlencoded({
 app.use('/v1/ping', require('../routes/ping'))
 app.use('/v1/auth', require('../routes/auth'))
 app.use('/v1/threads', require('../routes/threads'))
+app.use('/v1/users', require('../routes/users'))
 
 const server = app.listen(port, () => {
   console.log(`Worker listening on port ${port}`);
