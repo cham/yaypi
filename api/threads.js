@@ -45,9 +45,17 @@ const get = ({ skip, limit, sortBy, sortDir }) => db.Threads.find(
   }
 )
 
-const getOne = ({ _id }) => db.Threads.findOne({ _id }, THREAD_FIELDS)
+const getOne = ({ _id, urlname }) => {
+  const q = {}
+  if (urlname) {
+    q.urlname = urlname
+  } else {
+    q._id = _id
+  }
+  return db.Threads.findOne(q, THREAD_FIELDS)
+}
 
-const exists = ({ _id }) => getOne({ _id }).then(threadDoc => threadDoc !== null)
+const exists = ({ _id, urlname }) => getOne({ _id, urlname }).then(threadDoc => threadDoc !== null)
 
 const getThreadUrlname = ({ name, attempts = 1 }) => {
   if (attempts > MAX_URLNAME_ATTEMPTS) {

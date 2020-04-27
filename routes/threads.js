@@ -16,5 +16,6 @@ router.get('/:threadId', authMiddleware.authorizedUser, paginationMiddleware.pag
 router.post('/:threadId', authMiddleware.authorizedUser, threadsMiddleware.threadId, commentsMiddleware.create, commentsController.create)
 router.get('/:threadId/comments', authMiddleware.authorizedUser, paginationMiddleware.pagination, threadsMiddleware.threadId, threadsController.getOneWithComments)
 router.get('/:threadId/comments/:commentId', authMiddleware.authorizedUser, paginationMiddleware.pagination, threadsMiddleware.threadId, commentsMiddleware.commentId, commentsMiddleware.commentBelongsToThread, commentsController.getOne)
+router.get('/urlname/:threadUrlname/comments', authMiddleware.authorizedUser, paginationMiddleware.pagination, threadsMiddleware.threadUrlname, threadsController.getOneWithComments)
 
 module.exports = router

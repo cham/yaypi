@@ -57,6 +57,25 @@ const threadId = (req, res, next) => {
     })
 }
 
+const threadUrlname = (req, res, next) => {
+  if (!req.thread) {
+    req.thread = {}
+  }
+  console.log(req.params.threadUrlname)
+  threadsApi.exists({ urlname: req.params.threadUrlname })
+    .then((threadExists) => {
+      if (!threadExists) {
+        return res.status(404).send({ message: 'Thread does not exist' })
+      }
+      return threadsApi.getOne({ urlname: req.params.threadUrlname })
+        .then((threadDoc) => {
+          req.thread.id = threadDoc._id
+          next()
+        })
+    })
+    .catch(e => res.status(500).send({ message: e.message }))
+}
+
 const create = (req, res, next) => {
   if (!req.threadPayload) {
     req.threadPayload = {}
@@ -94,4 +113,5 @@ const create = (req, res, next) => {
 
 exports.sort = sort
 exports.threadId = threadId
+exports.threadUrlname = threadUrlname
 exports.create = create
