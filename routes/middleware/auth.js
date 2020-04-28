@@ -2,6 +2,28 @@ const authApi = require('../../api/auth')
 const usersApi = require('../../api/users')
 const errorResponse = require('../../controllers/utils/errorResponse')
 
+const register = (req, res, next) => {
+  if (!req.auth) {
+    req.auth = {}
+  }
+  if (!req.body.username) {
+    return errorResponse.userError({ res, message: 'body parameter "username" is required' })
+  }
+  if (!req.body.password) {
+    return errorResponse.userError({ res, message: 'body parameter "password" is required' })
+  }
+  usersApi.userExists({ username: req.body.username })
+    .then((exists) => {
+      if (exists) {
+        return errorResponse.userError({ res, message: 'User already exists' })
+      }
+      req.auth.username = req.body.username
+      req.auth.password = req.body.password
+      req.auth.email = req.body.email
+      next()
+    })
+}
+
 const login = (req, res, next) => {
   if (!req.auth) {
     req.auth = {}
@@ -44,5 +66,6 @@ const authorizedUser = (req, res, next) => {
     })
 }
 
+exports.register = register
 exports.login = login
 exports.authorizedUser = authorizedUser

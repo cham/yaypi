@@ -36,6 +36,7 @@ GET /v1/ping
 Auth
 ```
 POST /v1/auth/login { username, password }
+POST /v1/auth/register { username, password, [email] }
 ```
 Threads
 ```
