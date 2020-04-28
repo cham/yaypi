@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "docker": "docker-compose run --service-ports --rm api /bin/bash",
+    "mongo": "docker-compose run mongo mongo mongo/yayhooray -u yay -p hooray",
     "watch": "supervisor --quiet --watch . --extensions js -- index.js"
   },
   "repository": {
