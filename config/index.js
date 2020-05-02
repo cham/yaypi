@@ -1,10 +1,12 @@
+const isTruthy = v => v === '1' || v.toLowerCase() === 'y' || v.toLowerCase() === 'true'
+
 const config = {
   API_PORT: parseInt(process.env.YAYHOORAY_API_PORT),
   MONGODB_URL: process.env.YAYHOORAY_MONGODB_URL,
   JWT_SECRET: process.env.YAYHOORAY_JWT_SECRET,
   MAX_URLNAME_ATTEMPTS: parseInt(process.env.YAYHOORAY_MAX_URLNAME_ATTEMPTS),
   ALLOWED_CATEGORIES: process.env.YAYHOORAY_ALLOWED_CATEGORIES.split(','),
-  DEBUG: process.env.NODE_ENV === 'development'
+  SINGLE_CORE_MODE: isTruthy(process.env.YAYHOORAY_SINGLE_CORE_MODE)
 }
 
 const get = (str) => {
