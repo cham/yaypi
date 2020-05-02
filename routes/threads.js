@@ -12,10 +12,9 @@ const router = express.Router()
 
 router.post('/', authMiddleware.authorizedUser, threadsMiddleware.create, threadsController.create)
 router.get('/', authMiddleware.authorizedUser, paginationMiddleware.pagination, threadsMiddleware.sort, threadsController.get)
-router.get('/:threadId', authMiddleware.authorizedUser, paginationMiddleware.pagination, threadsMiddleware.threadId, threadsController.getOne)
-router.post('/:threadId', authMiddleware.authorizedUser, threadsMiddleware.threadId, commentsMiddleware.create, commentsController.create)
-router.get('/:threadId/comments', authMiddleware.authorizedUser, paginationMiddleware.pagination, threadsMiddleware.threadId, threadsController.getOneWithComments)
-router.get('/:threadId/comments/:commentId', authMiddleware.authorizedUser, paginationMiddleware.pagination, threadsMiddleware.threadId, commentsMiddleware.commentId, commentsMiddleware.commentBelongsToThread, commentsController.getOne)
-router.get('/urlname/:threadUrlname/comments', authMiddleware.authorizedUser, paginationMiddleware.pagination, threadsMiddleware.threadUrlname, threadsController.getOneWithComments)
+router.get('/:threadUrlname', authMiddleware.authorizedUser, paginationMiddleware.pagination, threadsMiddleware.threadUrlname, threadsController.getOne)
+router.post('/:threadUrlname', authMiddleware.authorizedUser, threadsMiddleware.threadUrlname, commentsMiddleware.create, commentsController.create)
+router.get('/:threadUrlname/comments', authMiddleware.authorizedUser, paginationMiddleware.pagination, threadsMiddleware.threadUrlname, threadsController.getOneWithComments)
+router.get('/:threadUrlname/comments/:commentId', authMiddleware.authorizedUser, paginationMiddleware.pagination, threadsMiddleware.threadUrlname, commentsMiddleware.commentId, commentsMiddleware.commentBelongsToThread, commentsController.getOne)
 
 module.exports = router

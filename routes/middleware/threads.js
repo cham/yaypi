@@ -40,28 +40,10 @@ const sort = (req, res, next) => {
   next()
 }
 
-const threadId = (req, res, next) => {
-  if (!req.thread) {
-    req.thread = {}
-  }
-  if (!isObjectId(req.params.threadId)) {
-    return res.status(400).send({ message: 'Thread ID is not valid' })
-  }
-  threadsApi.exists({ _id: req.params.threadId })
-    .then((threadExists) => {
-      if (!threadExists) {
-        return res.status(404).send({ message: 'Thread does not exist' })
-      }
-      req.thread.id = req.params.threadId
-      next()
-    })
-}
-
 const threadUrlname = (req, res, next) => {
   if (!req.thread) {
     req.thread = {}
   }
-  console.log(req.params.threadUrlname)
   threadsApi.exists({ urlname: req.params.threadUrlname })
     .then((threadExists) => {
       if (!threadExists) {
@@ -112,6 +94,5 @@ const create = (req, res, next) => {
 }
 
 exports.sort = sort
-exports.threadId = threadId
 exports.threadUrlname = threadUrlname
 exports.create = create
