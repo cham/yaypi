@@ -1,8 +1,6 @@
 const db = require('../db')
 const commentsApi = require('./comments')
-const config = require('../config')
-
-const MAX_URLNAME_ATTEMPTS = config.get('MAX_URLNAME_ATTEMPTS')
+const urlname = require('./utils/urlname')
 
 const THREAD_FIELDS = {
   _id: 1,
@@ -72,7 +70,8 @@ const getThreadUrlname = ({ name, attempts = 1 }) => {
 
 const remove = ({ _id }) => db.Threads.deleteOne({ _id })
 
-const create = ({ author, name, content, categories, nsfw, urlname }) => db.Threads.create(createQuery({ author, name, categories, nsfw, urlname }))
+const create = ({ author, name, content, categories, nsfw }) => urlname.get({ schema: db.Threads, name })
+  .then(urlname => db.Threads.create(createQuery({ author, name, categories, nsfw, urlname })))
   .then((doc) => {
     return commentsApi.create({ threadId: doc._id, author, content })
       .then((commentDoc) => {
@@ -86,6 +85,5 @@ const patch = ({ _id, patch }) => db.Threads.updateOne({ _id }, patch)
 exports.get = get
 exports.getOne = getOne
 exports.exists = exists
-exports.getThreadUrlname = getThreadUrlname
 exports.create = create
 exports.patch = patch

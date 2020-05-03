@@ -78,19 +78,14 @@ const create = (req, res, next) => {
   if (req.body.categories.find(category => ALLOWED_CATEGORIES.indexOf(category) === -1)) {
     return res.status(400).send({ message: `"categories" entries may only contain one or more of ${ALLOWED_CATEGORIES.join(', ')}` })
   }
-  threadsApi.getThreadUrlname({ name: req.body.name })
-    .then((urlname) => {
-      Object.assign(req.threadPayload, {
-        author: req.user.username,
-        name: req.body.name,
-        content: req.body.content,
-        categories: Array.from(new Set(req.body.categories)),
-        nsfw,
-        urlname
-      })
-      next()
-    })
-    .catch(e => res.status(500).send({ message: e.message }))
+  Object.assign(req.threadPayload, {
+    author: req.user.username,
+    name: req.body.name,
+    content: req.body.content,
+    categories: Array.from(new Set(req.body.categories)),
+    nsfw
+  })
+  next()
 }
 
 exports.sort = sort
