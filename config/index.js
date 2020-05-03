@@ -6,7 +6,8 @@ const config = {
   JWT_SECRET: process.env.YAYHOORAY_JWT_SECRET,
   MAX_URLNAME_ATTEMPTS: parseInt(process.env.YAYHOORAY_MAX_URLNAME_ATTEMPTS),
   ALLOWED_CATEGORIES: process.env.YAYHOORAY_ALLOWED_CATEGORIES.split(','),
-  SINGLE_CORE_MODE: isTruthy(process.env.YAYHOORAY_SINGLE_CORE_MODE)
+  SINGLE_CORE_MODE: isTruthy(process.env.YAYHOORAY_SINGLE_CORE_MODE),
+  SALT_ROUNDS: parseInt(process.env.YAYHOORAY_SALT_ROUNDS)
 }
 
 const get = (str) => {

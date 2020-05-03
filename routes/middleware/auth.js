@@ -6,6 +6,7 @@ const register = (req, res, next) => {
   if (!req.auth) {
     req.auth = {}
   }
+  req.auth.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
   if (!req.body.username) {
     return errorResponse.userError({ res, message: 'body parameter "username" is required' })
   }
@@ -28,6 +29,7 @@ const login = (req, res, next) => {
   if (!req.auth) {
     req.auth = {}
   }
+  req.auth.ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
   if (!req.body.username) {
     return errorResponse.userError({ res, message: 'body parameter "username" is required' })
   }

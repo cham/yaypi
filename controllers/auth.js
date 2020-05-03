@@ -5,6 +5,7 @@ const payload = req => ({
   username: req.auth.username,
   password: req.auth.password,
   email: req.auth.email,
+  ip: req.auth.ip
 })
 
 const register = (req, res) => authApi.register(payload(req))

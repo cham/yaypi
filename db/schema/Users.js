@@ -40,11 +40,11 @@ const usersSchema = new Schema({
   },
   custom_css: {
     type: String,
-    required: true
+    default: ''
   },
   custom_js: {
     type: String,
-    required: true
+    default: ''
   },
   fixed_chat_size: {
     type: Boolean,
