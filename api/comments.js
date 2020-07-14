@@ -38,7 +38,10 @@ const create = ({ threadId, author, content }) => db.Comments.create(createQuery
   .then((doc) => {
     const threadPatch = {
       last_comment_by: author,
-      last_comment_time: doc.created
+      last_comment_time: doc.created,
+      $inc: {
+        numcomments: 1
+      }
     }
     return db.Threads.updateOne({ _id: threadId }, threadPatch).then(() => {
       return clean(doc.toObject())

@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ -z ${1+x} ]; then
-        echo "You must supply an auth token as the first parameter"
-        exit 1
+  echo "You must supply an auth token as the first parameter"
+  exit 1
 fi
 if [ -z ${2+x} ]; then
 	echo "You must supply a thread id as the second parameter"
